@@ -18,3 +18,9 @@ expect this to be done and usefull.
 
 If any help needed, contact me @ Mathysleleu[at]gmail(dot)com !
 
+TODO:
+                 - Check for windows/unix system (nearly included)
+                 - Refresh public adress at every start
+                 - Make commands return something usefull
+                 
+        
