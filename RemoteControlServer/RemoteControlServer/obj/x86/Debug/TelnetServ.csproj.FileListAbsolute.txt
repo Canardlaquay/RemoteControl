@@ -1,0 +1,10 @@
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\bin\Debug\TelnetServ.exe
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\bin\Debug\TelnetServ.pdb
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\obj\x86\Debug\TelnetServ.exe
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\obj\x86\Debug\TelnetServ.pdb
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\bin\Debug\TelnetServ.exe
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\bin\Debug\TelnetServ.pdb
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\obj\x86\Debug\TelnetServ.exe
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\obj\x86\Debug\TelnetServ.pdb

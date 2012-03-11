@@ -1,1 +1,20 @@
-This is just a simple readme.
+Hello fellow visitor !
+I present you my project, a Remote Control Server, which works by sending
+very simple strings, whose does simple commands.
+It can easily be used by any language (programming, heh.), because it's
+using sockets.
+For a concrete example, in python, I send the string like this:
+            Remote_Socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+            Remote_Socket.connect((ipAdressofRemoteHost,portOfRemoteHost))
+            Remote_Socket.send("query")
+
+On the server, we handle the query. You have a XML config file, created
+at the start of the process. You can easily add commands there,
+I'll explain more when it will be working.
+
+For the moment, it works better on linux, because it doesn't crash
+if the process doesn't exist. This is an early alpha0.0.0.1, don't
+expect this to be done and usefull.
+
+If any help needed, contact me @ Mathysleleu[at]gmail(dot)com !
+
