@@ -1,0 +1,10 @@
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\bin\Release\TelnetServ.exe
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\bin\Release\TelnetServ.pdb
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\obj\x86\Release\TelnetServ.exe
+C:\Users\Canardlaquay\AppData\Local\Temporary Projects\TelnetServ\obj\x86\Release\TelnetServ.pdb
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\obj\x86\Release\TelnetServ.exe
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\obj\x86\Release\TelnetServ.pdb
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\bin\Release\TelnetServ.exe
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\bin\Release\TelnetServ.pdb
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\TelnetServ\TelnetServ\obj\x86\Release\ResolveAssemblyReference.cache
