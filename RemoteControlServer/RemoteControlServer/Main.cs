@@ -6,15 +6,14 @@ using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
 using System.Xml;
+using iTunesLib;
 
-namespace TelnetServ
+namespace RemoteControlServer
 {
 
     public class serv
     {
-        /* TODO: - Check for windows/unix system
-                 - Refresh public adress at every start
-        */
+        
         
         public static void Main(string[] arg)
         {
@@ -22,6 +21,7 @@ namespace TelnetServ
             List<string> typCmd = new List<string>();
             List<string> tgtCmd = new List<string>();
             List<string> ipList = new List<string>();
+            iTunesControl itunes = new iTunesControl();
             string operatingSystem = "";
             string LocalIPv6 = "";
             string LocalIPv4 = "";
@@ -91,7 +91,7 @@ namespace TelnetServ
                     Console.WriteLine(reponse);
                     if (CheckCommand(reponse, ref nomCmd))
                     {
-                        ProcessCommand(reponse, ref nomCmd, ref typCmd, ref tgtCmd);
+                        ProcessCommand(reponse, ref nomCmd, ref typCmd, ref tgtCmd, ref operatingSystem);
                     }
                     else
                     {
@@ -213,8 +213,33 @@ namespace TelnetServ
 
 
             myXmlTextWriter.WriteStartElement("Windows");
+            myXmlTextWriter.WriteComment("Use the exec parameter with an argument to execute files easily");
             myXmlTextWriter.WriteStartElement("calculator");
             myXmlTextWriter.WriteAttributeString("exec", "calc");
+            myXmlTextWriter.WriteEndElement();
+            myXmlTextWriter.WriteComment("Just specify the correct path for the app !");
+            myXmlTextWriter.WriteStartElement("calculator");
+            myXmlTextWriter.WriteAttributeString("exec", "C:\\Windows\\notepad.exe");
+            myXmlTextWriter.WriteEndElement();
+            myXmlTextWriter.WriteComment("Here, it's remotely controlling iTunes (via a proper library).");
+            myXmlTextWriter.WriteComment("All the commands will be listed in the README at https://github.com/Canardlaquay/RemoteControl");
+            myXmlTextWriter.WriteStartElement("itunesPause");
+            myXmlTextWriter.WriteAttributeString("itunes", "pause");
+            myXmlTextWriter.WriteEndElement();
+            myXmlTextWriter.WriteStartElement("itunesNextTrack");
+            myXmlTextWriter.WriteAttributeString("itunes", "playNextTrack");
+            myXmlTextWriter.WriteEndElement();
+            myXmlTextWriter.WriteStartElement("itunesPlay");
+            myXmlTextWriter.WriteAttributeString("itunes", "play");
+            myXmlTextWriter.WriteEndElement();
+            myXmlTextWriter.WriteStartElement("itunesPreviousTrack");
+            myXmlTextWriter.WriteAttributeString("itunes", "playPreviousTrack");
+            myXmlTextWriter.WriteEndElement();
+            myXmlTextWriter.WriteStartElement("itunesIncreaseVolume");
+            myXmlTextWriter.WriteAttributeString("itunes", "volIncrease");
+            myXmlTextWriter.WriteEndElement();
+            myXmlTextWriter.WriteStartElement("itunesDecreaseVolume");
+            myXmlTextWriter.WriteAttributeString("itunes", "volDecrease");
             myXmlTextWriter.WriteEndElement();
             myXmlTextWriter.WriteEndElement();
 
@@ -225,24 +250,72 @@ namespace TelnetServ
             myXmlTextWriter.Close();
         }
 
-        public static void ProcessCommand(string rep, ref List<string> nomCmd, ref List<string> typCmd, ref List<string> tgtCmd)
+        public static void ProcessCommand(string rep, ref List<string> nomCmd, ref List<string> typCmd, ref List<string> tgtCmd, ref string operatingSystem)
         {
             for(int i = 0; i < nomCmd.Count; i++)
             {
                 if (rep == nomCmd[i])
                 {
-                    switch (typCmd[i])
-                    {
-                         //check for OS needed
-                        case "exec":
-                            Process.Start(tgtCmd[i]);
-                            break;
-                        default:
-                            break;
-                    }
+                    
+                         if (operatingSystem.Contains("Windows"))
+                         {
+                             switch (typCmd[i])
+                             {
+                                     //console commands only, mainly for executing apps.
+                                 case "exec":
+                                     Process.Start(tgtCmd[i]);
+                                     break;
+
+                                     //itunes Part !
+                                 case "itunes":
+                                     iTunesControl it = new iTunesControl();
+                                     switch (tgtCmd[i])
+                                     {
+                                         case "play":
+                                             it.playMusic();
+                                             break;
+                                         case "stop":
+                                             it.stopMusic();
+                                             break;
+                                         case "pause":
+                                             it.pauseMusic();
+                                             break;
+                                         case "volIncrease":
+                                             it.volume += 10;
+                                             break;
+                                         case "volDecrease":
+                                             it.volume -= 10;
+                                             break;
+                                         case "playNextTrack":
+                                             it.playNextTrack();
+                                             break;
+                                         case "playPreviousTrack":
+                                             it.playPreviousTrack();
+                                             break;
+                                         default:
+                                             break;
+                                     }
+                                     break;
+                                 default:
+                                     break;
+                             }
+                         }
+                         if (operatingSystem.Contains("Unix"))
+                         {
+                             switch (typCmd[i])
+                             {
+                                 case "exec":
+                                     Process.Start(tgtCmd[i]);
+                                     break;
+                                 default:
+                                     break;
+                             }
+                         }
+                    
                 }
             }
         }
+
 
     }
 

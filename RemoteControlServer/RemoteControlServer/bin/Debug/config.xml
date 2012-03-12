@@ -16,5 +16,11 @@
   </Unix>
   <Windows>
     <calculator exec="calc" />
+	<itunesPause itunes="pause" />
+	<itunesNextTrack itunes="playNextTrack" />
+	<itunesPlay itunes="play" />
+	<itunesPreviousTrack itunes="playPreviousTrack" />
+	<itunesIncreaseVolume itunes="volIncrease" />
+	<itunesDecreaseVolume itunes="volDecrease" />
   </Windows>
 </GlobalInfo>

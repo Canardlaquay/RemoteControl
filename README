@@ -9,18 +9,19 @@ For a concrete example, in python, I send the string like this:
             Remote_Socket.send("query")
 
 On the server, we handle the query. You have a XML config file, created
-at the start of the process. You can easily add commands there,
-I'll explain more when it will be working.
+at the start of the process. You can check a basic one at the root of the repo.
+You can easily add commands there, but I'll explain more when it will be fully working.
 
-For the moment, it works better on linux, because it doesn't crash
-if the process doesn't exist. This is an early alpha0.0.0.1, don't
-expect this to be done and usefull.
+For the moment, I only focus Windows, because nearly everything can be
+done by commands on Unix systems. It is already included, but does
+not return anything for the moment, I'll focus on this later.
+I included iTunes remote control, i'll use the library at the fullest later.
 
-If any help needed, contact me @ Mathysleleu[at]gmail(dot)com !
+If any information/help needed, contact me @ Mathysleleu[at]gmail(dot)com !
 
 TODO:
-                 - Check for windows/unix system (nearly included)
                  - Refresh public adress at every start
-                 - Make commands return something usefull
+                 - Make commands return something
+                 - Add more librairies !
                  
         
