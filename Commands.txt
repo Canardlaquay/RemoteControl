@@ -1,0 +1,44 @@
+Here are all the commands :
+
+They are listed as:
+   nameofthecommand [(argumentone)]
+   [xxxxx] = argument needed
+   (xxxxx) = optionnal argument
+   ******* = special argument
+   Nothing behind, means nothing.
+ 
+ First example:
+ <examplecommand type="arg" />
+ will be listed as:
+ type [(arg)]
+ 
+ So,
+ <listDirUnix exec="ls" />
+ will be listed as:
+ exec [xx]
+ 
+ Ok ? go !
+ 
+ Unix Commands:
+ 
+ exec [xx] >> Executing basic shell commands, like ls, without returning anything.
+ execReturn [xx] >> Executing basic shell commands, like ls, but returning the result of the command.
+ exit >> Simply exit the program.
+ 
+ Windows:
+ 
+ exec [xx] >> Executing a file, like an executable.
+ execReturn [xx] >> Not yet included !
+ exit >> Exiting. O'rly ?
+ killApp [xx] >> Killing app named 'xx'.
+ shutdown >> Shuts down the PC, thanks M. Captain Obvious.
+ itunes ****** >> Replace the * with these commands just under, I think I don't need to explain their use.
+ ****** can be:
+ play
+ stop
+ pause
+ volIncrease
+ volDecrease
+ playNextTrack
+ playPreviousTrack
+ 
