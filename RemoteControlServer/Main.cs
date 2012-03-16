@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
 using System.Xml;
-using iTunesLib;
+//using iTunesLib;
 
 namespace RemoteControlServer
 {
@@ -21,7 +21,7 @@ namespace RemoteControlServer
             List<string> typCmd = new List<string>();
             List<string> tgtCmd = new List<string>();
             List<string> ipList = new List<string>();
-            iTunesControl itunes = new iTunesControl();
+            //iTunesControl itunes = new iTunesControl();
             string operatingSystem = "";
             string LocalIPv6 = "";
             string LocalIPv4 = "";
@@ -81,7 +81,6 @@ namespace RemoteControlServer
                    
                     Socket s = myList.AcceptSocket();
                     Console.WriteLine("Connection accepted from " + s.RemoteEndPoint);
-
                     byte[] b = new byte[100];
                     int k = s.Receive(b);
                     Console.WriteLine("Recieved...");
@@ -91,15 +90,12 @@ namespace RemoteControlServer
                     Console.WriteLine(reponse);
                     if (CheckCommand(reponse, ref nomCmd))
                     {
-                        ProcessCommand(reponse, ref nomCmd, ref typCmd, ref tgtCmd, ref operatingSystem);
+                        ProcessCommand(reponse, ref nomCmd, ref typCmd, ref tgtCmd, ref operatingSystem, ref s);
                     }
                     else
                     {
                         Console.WriteLine("No command to execute found ! Skipping...");
                     }
-                    ASCIIEncoding asen = new ASCIIEncoding();
-                    // answer TODO: s.Send(asen.GetBytes("This is the answer"));
-                    //Console.WriteLine("Proof that the answer was sent");
                     s.Close();
 
                     
@@ -110,7 +106,7 @@ namespace RemoteControlServer
             catch (Exception e)
             {
                 Console.WriteLine("Error..... " + e.StackTrace);
-                Console.WriteLine("Exiting...");
+                Console.WriteLine("Press any key to Exi...");
                 Console.ReadLine();
                 Environment.Exit(0);
                 
@@ -131,6 +127,37 @@ namespace RemoteControlServer
 
         public static void XmlRead(ref List<string> nomCmd, ref List<string> typCmd, ref List<string> tgtCmd, ref string operatingSystem, ref string LocalIPv6, ref string LocalIPv4, ref string InternetIPv4)
         {
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load("config.xml");
+
+            string host = Dns.GetHostName();
+            IPHostEntry ip = Dns.GetHostEntry(host);
+            string ipLocalv6 = "";
+            string ipLocalv4 = "";
+            WebClient webClient = new WebClient();
+            string ipIntv4 = webClient.DownloadString("http://myip.ozymo.com/");
+            foreach (IPAddress ipp in ip.AddressList)
+            {
+                if (ipp.IsIPv6LinkLocal == true)
+                {
+                    ipLocalv6 = ipp.ToString();
+                }
+                if (ipp.ToString().StartsWith("192.") || ipp.ToString().StartsWith("172.") || ipp.ToString().StartsWith("10."))
+                {
+                    ipLocalv4 = ipp.ToString();
+                }
+            }
+            XmlNode node0 = xmlDoc.SelectSingleNode("GlobalInfo/OS");
+            node0.InnerText = Environment.OSVersion.ToString();
+            XmlNode node = xmlDoc.SelectSingleNode("GlobalInfo/LocalIPv6");
+            node.InnerText = ipLocalv6;
+            XmlNode node1 = xmlDoc.SelectSingleNode("GlobalInfo/LocalIPv4");
+            node1.InnerText = ipLocalv4;
+            XmlNode node2 = xmlDoc.SelectSingleNode("GlobalInfo/InternetIPv4");
+            node2.InnerText = ipIntv4;
+            xmlDoc.Save("config.xml");
+
             XmlTextReader reader = new XmlTextReader("config.xml");
             while (reader.Read())
             {
@@ -170,7 +197,7 @@ namespace RemoteControlServer
             myXmlTextWriter.WriteComment("This is the configuration file for commands that are listened by the server. You can put your owns there.");
             myXmlTextWriter.WriteComment("You can easily add commands by adding an other node with the target attribute next to it.");
             myXmlTextWriter.WriteComment("example: <nameofthecommand target=\"command to execute in console\" />");
-            myXmlTextWriter.WriteComment("Do not modify any information in the GlobalInfo node");
+            myXmlTextWriter.WriteComment("Do not modify any information in the GlobalInfo node except under Windows/Unix nodes.");
 
 
             myXmlTextWriter.WriteStartElement("GlobalInfo");
@@ -250,7 +277,7 @@ namespace RemoteControlServer
             myXmlTextWriter.Close();
         }
 
-        public static void ProcessCommand(string rep, ref List<string> nomCmd, ref List<string> typCmd, ref List<string> tgtCmd, ref string operatingSystem)
+        public static void ProcessCommand(string rep, ref List<string> nomCmd, ref List<string> typCmd, ref List<string> tgtCmd, ref string operatingSystem, ref Socket s)
         {
             for(int i = 0; i < nomCmd.Count; i++)
             {
@@ -265,8 +292,29 @@ namespace RemoteControlServer
                                  case "exec":
                                      Process.Start(tgtCmd[i]);
                                      break;
-
+                                 case "execReturn":
+                                     ASCIIEncoding asen = new ASCIIEncoding();
+                                     s.Send(asen.GetBytes("Not yet included on windows..."));
+                                     break;
+                                 case "exit":
+                                     Console.WriteLine("Exiting...");
+                                     Environment.Exit(0);
+                                     break;
                                      //itunes Part !
+                                 case "killApp":
+                                     Process[] proc = Process.GetProcessesByName(tgtCmd[i]);
+                                     foreach (Process pr in proc)
+                                     {
+                                         if (pr.ToString() == tgtCmd[i])
+                                         {
+                                             pr.Kill();
+                                         }
+                                     }
+                                     break;
+                                 case "shutdown":
+                                     Console.WriteLine("Shutting down computer, byebye !");
+                                     Process.Start("shutdown", "/s /t 0");
+                                     break;
                                  case "itunes":
                                      iTunesControl it = new iTunesControl();
                                      switch (tgtCmd[i])
@@ -305,7 +353,19 @@ namespace RemoteControlServer
                              switch (typCmd[i])
                              {
                                  case "exec":
-                                     Process.Start(tgtCmd[i]);
+                                     Process.Start("/bin/" + tgtCmd[i], "-l");
+                                     break;
+                                 case "exit":
+                                     Console.WriteLine("Exiting...");
+                                     Environment.Exit(0);
+                                     break;
+                                 case "execReturn":
+                                     string progPath = Directory.GetCurrentDirectory() + "\\rcsDump";
+                                     File.WriteAllText(progPath, tgtCmd[i] + " >> rcsDump");
+                                     Process.Start("/bin/sh", progPath);
+                                     string answer = File.ReadAllText(progPath);
+                                     ASCIIEncoding asen = new ASCIIEncoding();
+                                     s.Send(asen.GetBytes("Here's the answer:" + answer));
                                      break;
                                  default:
                                      break;
@@ -315,6 +375,8 @@ namespace RemoteControlServer
                 }
             }
         }
+
+        //public void XmlUpdateInfo(
 
 
     }

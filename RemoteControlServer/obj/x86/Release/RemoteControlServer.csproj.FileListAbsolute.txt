@@ -10,5 +10,7 @@ C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\Re
 C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\bin\Release\RemoteControlServer.exe
 C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\bin\Release\RemoteControlServer.pdb
 C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\obj\x86\Release\ResolveAssemblyReference.cache
-C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\obj\x86\Release\Interop.iTunesLib.dll
-C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\obj\x86\Release\RemoteControlServer.csproj.ResolveComReference.cache
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\bin\Release\RemoteControlServer.exe.manifest
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\bin\Release\RemoteControlServer.application
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\obj\x86\Release\RemoteControlServer.exe.manifest
+C:\Users\Canardlaquay\Dropbox\Visual Studio 2010\Projects\RemoteControlServer\RemoteControlServer\obj\x86\Release\RemoteControlServer.application
